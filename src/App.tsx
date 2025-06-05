@@ -151,26 +151,13 @@ const HoleDiagram: React.FC<HoleDiagramProps> = ({ holeNumber, image, shots, onM
   };
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        maxWidth: '100%',
-        aspectRatio: '3/2',
-        margin: '0 auto',
-        overflow: 'hidden',
-        background: '#fff',
-        borderRadius: 16,
-        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-        touchAction: 'none',
-      }}
-    >
+    <div className="relative w-full max-w-full aspect-[3/2] mx-auto overflow-hidden bg-white rounded-lg shadow-card touch-none">
       {fullView ? (
         <svg
           width="100%"
           height="100%"
           viewBox={`0 0 ${IMAGE_WIDTH} ${IMAGE_HEIGHT}`}
-          style={{ position: 'absolute', top: 0, left: 0, zIndex: 2, pointerEvents: 'auto' }}
+          className="absolute top-0 left-0 z-10 pointer-events-auto"
           onClick={e => {
             if (shotsDisabled) return;
             if (setMode !== 'shot') return;
@@ -344,23 +331,23 @@ const HoleDiagram: React.FC<HoleDiagramProps> = ({ holeNumber, image, shots, onM
           }}
         />
       )}
-      <div className="control-buttons">
+      <div className="absolute top-3 right-3 z-20 flex flex-col gap-2 md:flex-row">
         <button
           onClick={onResetShots}
-          className="control-button"
+          className="btn btn-secondary"
         >
           Reset Shots
         </button>
         <button
           onClick={handleResetView}
-          className="control-button"
+          className="btn btn-secondary"
           disabled={fullView}
         >
           Reset View
         </button>
         <button
           onClick={() => setFullView(v => !v)}
-          className="control-button"
+          className="btn btn-secondary"
         >
           {fullView ? 'Draggable View' : 'Full View'}
         </button>
@@ -477,11 +464,11 @@ const RoundTracker = () => {
   };
 
   return (
-    <div className="round-tracker-container">
-      <div className="header-container">
-        <h1 className="header-title">Round Tracker</h1>
+    <div className="max-w-7xl mx-auto px-4 py-8 md:px-6 md:py-12">
+      <div className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center mb-8">
+        <h1 className="text-3xl md:text-4xl font-semibold text-primary m-0">Round Tracker</h1>
         <button
-          className={`analytics-toggle ${showAnalytics ? 'active' : ''}`}
+          className={`btn ${showAnalytics ? 'btn-primary' : 'btn-secondary'}`}
           onClick={() => setShowAnalytics(a => !a)}
         >
           {showAnalytics ? 'Hide' : 'Show'} Analytics
@@ -489,7 +476,27 @@ const RoundTracker = () => {
       </div>
 
       {showAnalytics && (
-        <DataAnalytics holeStates={holeStates} holes={REDTAIL_HOLES} />
+        <div className="card mb-8">
+          <h2 className="text-2xl font-semibold text-primary mb-4">Round Analytics</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="card bg-primary/5">
+              <h3 className="text-lg font-medium text-primary mb-2">Total Shots</h3>
+              <p className="text-3xl font-bold text-primary">{state.markers.length}</p>
+            </div>
+            <div className="card bg-primary/5">
+              <h3 className="text-lg font-medium text-primary mb-2">Average Shots</h3>
+              <p className="text-3xl font-bold text-primary">{state.markers.length > 0 ? (state.markers.length / REDTAIL_HOLES.length).toFixed(1) : '-'}</p>
+            </div>
+            <div className="card bg-primary/5">
+              <h3 className="text-lg font-medium text-primary mb-2">Best Hole</h3>
+              <p className="text-3xl font-bold text-primary">Hole {selectedHole}</p>
+            </div>
+            <div className="card bg-primary/5">
+              <h3 className="text-lg font-medium text-primary mb-2">Worst Hole</h3>
+              <p className="text-3xl font-bold text-primary">Hole {selectedHole}</p>
+            </div>
+          </div>
+        </div>
       )}
 
       <div className="course-info" style={{
