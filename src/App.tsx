@@ -344,57 +344,23 @@ const HoleDiagram: React.FC<HoleDiagramProps> = ({ holeNumber, image, shots, onM
           }}
         />
       )}
-      <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 4, display: 'flex', gap: '0.5rem' }}>
+      <div className="control-buttons">
         <button
           onClick={onResetShots}
-          style={{
-            background: '#fff',
-            border: 'none',
-            borderRadius: 8,
-            padding: '0.5rem 1rem',
-            color: '#1565C0',
-            fontWeight: 600,
-            cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            transition: 'all 0.2s ease',
-            fontSize: '0.9rem'
-          }}
+          className="control-button"
         >
           Reset Shots
         </button>
         <button
           onClick={handleResetView}
-          style={{
-            background: '#fff',
-            border: 'none',
-            borderRadius: 8,
-            padding: '0.5rem 1rem',
-            color: '#1565C0',
-            fontWeight: 600,
-            cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            transition: 'all 0.2s ease',
-            fontSize: '0.9rem',
-            opacity: fullView ? 0.5 : 1,
-            pointerEvents: fullView ? 'none' : 'auto'
-          }}
+          className="control-button"
+          disabled={fullView}
         >
           Reset View
         </button>
         <button
           onClick={() => setFullView(v => !v)}
-          style={{
-            background: '#fff',
-            border: 'none',
-            borderRadius: 8,
-            padding: '0.5rem 1rem',
-            color: '#1565C0',
-            fontWeight: 600,
-            cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            transition: 'all 0.2s ease',
-            fontSize: '0.9rem'
-          }}
+          className="control-button"
         >
           {fullView ? 'Draggable View' : 'Full View'}
         </button>
@@ -511,22 +477,11 @@ const RoundTracker = () => {
   };
 
   return (
-    <div className="round-tracker" style={{ maxWidth: 1200, margin: '0 auto', padding: '2rem 1rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <h1 style={{ margin: 0, fontSize: '2.5rem', color: '#1a237e', fontWeight: 600 }}>Round Tracker</h1>
+    <div className="round-tracker-container">
+      <div className="header-container">
+        <h1 className="header-title">Round Tracker</h1>
         <button
-          style={{
-            padding: '0.75rem 1.5rem',
-            borderRadius: 8,
-            border: 'none',
-            background: showAnalytics ? '#1a237e' : '#fff',
-            color: showAnalytics ? '#fff' : '#1a237e',
-            fontWeight: 600,
-            cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            transition: 'all 0.2s ease',
-            fontSize: '1rem'
-          }}
+          className={`analytics-toggle ${showAnalytics ? 'active' : ''}`}
           onClick={() => setShowAnalytics(a => !a)}
         >
           {showAnalytics ? 'Hide' : 'Show'} Analytics
